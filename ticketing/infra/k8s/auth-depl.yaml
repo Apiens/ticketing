@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector: # deployment가 pod을 찾는데 쓰임.
+    matchLabels:
+      app: auth
+  template: # deployment가 pod을 생성하는 방법.
+    metadata: # 바로 위에 정의한 lable을 가진 pod을 생성.
+      labels:
+        app: auth
+    spec: # pod이 갖춰야 할 스펙
+      containers: # 돌아가야할 컨테이너들.
+        - name: auth # 컨테이너 명
+          image: apiens/auth # 컨테이너 돌리는데 사용할 이미지
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec: 
+  # type 을 지정하지 않음 -> default 인 cluster-ip service 가 됨.
+  # cluster-ip service는 클러스터 내부에서의 요청만 받아준다는걸 기억하자.
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

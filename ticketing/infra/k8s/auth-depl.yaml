@@ -14,8 +14,7 @@ spec:
     spec: # pod이 갖춰야 할 스펙
       containers: # 돌아가야할 컨테이너들.
         - name: auth # 컨테이너 명
-          image: apiens/auth # 컨테이너 돌리는데 사용할 이미지
-
+          image: us.gcr.io/local-chalice-331107/auth # 컨테이너 돌리는데 사용할 이미지
 ---
 apiVersion: v1
 kind: Service
